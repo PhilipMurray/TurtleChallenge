@@ -1,0 +1,39 @@
+{
+  "board-size": {
+    "length": 5,
+    "width": 4
+  },
+  "starting-point": {
+    "position": {
+      "x": 0,
+      "y": 1
+    }
+  },
+  "direction": "North",
+  "exit-point": {
+    "position": {
+      "x": 4,
+      "y": 2
+    }
+  },
+  "mines": [
+    {
+      "position": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 1
+      }
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 3
+      }
+    }
+  ]
+}

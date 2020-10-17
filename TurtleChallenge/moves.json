@@ -1,0 +1,11 @@
+{
+  "sequences": [
+    { "id": 1,
+      "moveOperations": [ "m", "r", "m", "m", "m", "m", "r", "m", "m" ] 
+    },
+    {
+      "id": 2,
+      "moveOperations": [ "r", "m" ]
+    }
+  ]
+}
