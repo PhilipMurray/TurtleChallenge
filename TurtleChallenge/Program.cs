@@ -17,12 +17,20 @@ namespace TurtleChallenge
             GameSettings gameSettings = ReadGameSettingsFile(args[0]);
             var littleTurtle = new LittleTurtle(gameSettings.StartingPoint.Position, gameSettings.Direction);
 
+            /// This is the game loop.
+            /// Each line in the moves file represents a sequence of moves.
+            /// Empty line are skipped.
             using (var file = File.OpenText($"{args[1]}.csv"))
             {
                 int seqCount = 0;
                 while (!file.EndOfStream)
                 {
                     var line = file.ReadLine();
+                    if (string.IsNullOrEmpty(line))
+                    {
+                        continue;
+                    }
+
                     seqCount++;
                     var operations = line.Split(',');
 
@@ -57,6 +65,11 @@ namespace TurtleChallenge
             }
         }
 
+        /// <summary>
+        /// Method to read the game settings file and deserialize it into an object.
+        /// </summary>
+        /// <param name="fileName">The game settings file name.</param>
+        /// <returns>The game settings object <see cref="GameSettings"/></returns>
         private static GameSettings ReadGameSettingsFile(string fileName)
         {
             using (var file = File.OpenText($"{fileName}.json"))
@@ -67,6 +80,13 @@ namespace TurtleChallenge
             }
         }
 
+        /// <summary>
+        /// Method to check if the little turtle has moved outside the bounds of the game board
+        /// and updates the turtle's status.
+        /// </summary>
+        /// <param name="littleTurtle">Our brave little turtle <see cref="LittleTurtle"/>.</param>
+        /// <param name="boardSize">The board size.</param>
+        /// <returns></returns>
         private static bool CheckForOutOfBounds(LittleTurtle littleTurtle, BoardSize boardSize)
         {
             if(littleTurtle.CurrentPosition.X < 0
@@ -83,6 +103,11 @@ namespace TurtleChallenge
             }
         }
 
+        /// <summary>
+        /// Method to check if the turtle's status has changed to a final state.
+        /// </summary>
+        /// <param name="littleTurtle">Our brave little turtle <see cref="LittleTurtle"/>.</param>
+        /// <returns></returns>
         private static bool CheckForStillInDanger(LittleTurtle littleTurtle)
         {
             if(littleTurtle.Status == TurtleStatus.Alive)
@@ -95,6 +120,12 @@ namespace TurtleChallenge
             }
         }
 
+        /// <summary>
+        /// Method to check if the current position of the turtle matches the exit position.
+        /// </summary>
+        /// <param name="littleTurtle">Our brave little turtle <see cref="LittleTurtle"/></param>
+        /// <param name="exitPoint">The exit point.</param>
+        /// <returns></returns>
         private static bool CheckForEscape(LittleTurtle littleTurtle, ExitPoint exitPoint)
         {
             if(exitPoint.Position.Equals(littleTurtle.CurrentPosition))
@@ -109,10 +140,10 @@ namespace TurtleChallenge
         }
 
         /// <summary>
-        /// 
+        /// Method to check if the position of the turtle matches a mine's position.
         /// </summary>
-        /// <param name="littleTurtle"></param>
-        /// <param name="mines"></param>
+        /// <param name="littleTurtle">Our brave little turtle <see cref="LittleTurtle"/></param>
+        /// <param name="mines">The collection of mines <see cref="Mine"/></param>
         /// <returns></returns>
         private static bool CheckForMine(LittleTurtle littleTurtle, List<Mine> mines)
         {
