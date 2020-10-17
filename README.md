@@ -10,7 +10,7 @@ This is a .NET Core Console Application that takes two file names as input argum
 The program will reach each line in the moves file and preform the moves operations on the turtle.
 At the end of each sequence of moves the result will be printed to the screen. 
 ### The Game Settings 
-The json file represent the game settings, for example:
+JSON format was chosen for its readability and ease of use when deserializing in C#.
 ```json
 {
   "board-size": {
