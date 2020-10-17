@@ -15,8 +15,6 @@ namespace TurtleChallenge
         static void Main(string[] args)
         {
             GameSettings gameSettings = ReadGameSettingsFile(args[0]);
-            Moves moves = ReadMovesFile(args[1]);
-
             var littleTurtle = new LittleTurtle(gameSettings.StartingPoint.Position, gameSettings.Direction);
 
             using (var file = File.OpenText($"{args[1]}.csv"))
@@ -49,55 +47,13 @@ namespace TurtleChallenge
                         }
                     }
 
-                    if (CheckForLost(littleTurtle))
+                    if (CheckForStillInDanger(littleTurtle))
                     {
                         Console.WriteLine($"Sequence {seqCount}: Still in danger!");
                     }
 
                     littleTurtle.Reset();
                 }
-            }
-
-            foreach (var seq in moves.Sequences)
-            {
-                foreach (var operation in seq.MoveOperations)
-                {
-                    littleTurtle.PerformOperation(operation);
-
-                    if (CheckForMine(littleTurtle, gameSettings.Mines))
-                    {
-                        Console.WriteLine($"Sequence {seq.Id}: Mine Hit!");
-                        break;
-                    }
-                    else if (CheckForEscape(littleTurtle, gameSettings.ExitPoint))
-                    {
-                        Console.WriteLine($"Sequence {seq.Id}: Success!");
-                        break;
-                    }
-                    else if (CheckForOutOfBounds(littleTurtle, gameSettings.BoardSize))
-                    {
-                        Console.WriteLine($"Sequence {seq.Id}: Turtle has moved off the board and is now lost forever!");
-                        break;
-                    }
-                }
-
-                if (CheckForLost(littleTurtle))
-                {
-                    Console.WriteLine($"Sequence {seq.Id}: Still in danger!");
-                }
-
-                littleTurtle.Reset();
-            }
-
-        }
-
-        private static Moves ReadMovesFile(string fileName)
-        {
-            using (var file = File.OpenText($"{fileName}.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-
-                return (Moves)serializer.Deserialize(file, typeof(Moves));
             }
         }
 
@@ -118,6 +74,7 @@ namespace TurtleChallenge
                 || littleTurtle.CurrentPosition.X >= boardSize.Length
                 || littleTurtle.CurrentPosition.Y >= boardSize.Width)
             {
+                littleTurtle.Status = TurtleStatus.Lost;
                 return true;
             }
             else
@@ -126,7 +83,7 @@ namespace TurtleChallenge
             }
         }
 
-        private static bool CheckForLost(LittleTurtle littleTurtle)
+        private static bool CheckForStillInDanger(LittleTurtle littleTurtle)
         {
             if(littleTurtle.Status == TurtleStatus.Alive)
             {

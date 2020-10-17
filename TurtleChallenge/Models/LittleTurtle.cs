@@ -45,11 +45,21 @@ namespace TurtleChallenge.Models
             }
         }
 
+
+        /// <summary>
+        /// Method to reset the turtle to the initial state.
+        /// </summary>
         public void Reset()
         {
             _currentPosition = _initialPosition;
             _currentDirection = _initialDirection;
+
+            _status = TurtleStatus.Alive;
         }
+
+        /// <summary>
+        /// Method to rotate the turtle 90 degrees.
+        /// </summary>
         private void Rotate()
         {
             switch (CurrentDirection)
@@ -71,6 +81,9 @@ namespace TurtleChallenge.Models
             }
         }
 
+        /// <summary>
+        /// Method to move the turtle one position relative to the current direction.
+        /// </summary>
         private void Move()
         {
             switch (CurrentDirection)

@@ -9,14 +9,10 @@
   <ItemGroup>
     <None Remove="game-settings.json" />
     <None Remove="moves.csv" />
-    <None Remove="moves.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="game-settings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="moves.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="moves.csv">
