@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using TurtleChallenge.Enums;
 using TurtleChallenge.Models;
 
@@ -89,7 +87,7 @@ namespace TurtleChallenge
         /// <returns></returns>
         private static bool CheckForOutOfBounds(LittleTurtle littleTurtle, BoardSize boardSize)
         {
-            if(littleTurtle.CurrentPosition.X < 0
+            if (littleTurtle.CurrentPosition.X < 0
                 || littleTurtle.CurrentPosition.Y < 0
                 || littleTurtle.CurrentPosition.X >= boardSize.Length
                 || littleTurtle.CurrentPosition.Y >= boardSize.Width)
@@ -110,7 +108,7 @@ namespace TurtleChallenge
         /// <returns></returns>
         private static bool CheckForStillInDanger(LittleTurtle littleTurtle)
         {
-            if(littleTurtle.Status == TurtleStatus.Alive)
+            if (littleTurtle.Status == TurtleStatus.Alive)
             {
                 return true;
             }
@@ -128,7 +126,7 @@ namespace TurtleChallenge
         /// <returns></returns>
         private static bool CheckForEscape(LittleTurtle littleTurtle, ExitPoint exitPoint)
         {
-            if(exitPoint.Position.Equals(littleTurtle.CurrentPosition))
+            if (exitPoint.Position.Equals(littleTurtle.CurrentPosition))
             {
                 littleTurtle.Status = TurtleStatus.Escaped;
                 return true;
@@ -147,7 +145,7 @@ namespace TurtleChallenge
         /// <returns></returns>
         private static bool CheckForMine(LittleTurtle littleTurtle, List<Mine> mines)
         {
-            if(mines.Select(x => x.Position).Contains(littleTurtle.CurrentPosition))
+            if (mines.Select(x => x.Position).Contains(littleTurtle.CurrentPosition))
             {
                 littleTurtle.Status = TurtleStatus.Dead;
                 return true;
@@ -158,6 +156,6 @@ namespace TurtleChallenge
             }
         }
 
-        
+
     }
 }
